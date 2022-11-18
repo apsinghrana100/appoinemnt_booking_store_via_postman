@@ -8,7 +8,7 @@ const ul=document.getElementById('users'); ///ul
 
 sumbmit.addEventListener('click',storedata); //// 
 
-
+let id;
 
 //////////////////////////
 
@@ -18,10 +18,28 @@ function storedata(e){
     const email=document.getElementById('email').value;
     if(sumbmit.value==='UPDATE')
     {
+
+              const data={
+                "name":name,
+                "email":email
+              }
+              console.log()
+        axios.put(`https://crudcrud.com/api/aad32d87ef1144bf8ad8dd3d919651f5/bookapinmnetdetail/${id}`,data)
+        .then((Response)=>{
+          console.log(Response);
+          displaydata(data);
+             cleardata();
+        }).catch((err)=>{
+          console.log(err);
+        });
+
         sumbmit.value='Submit';
         sumbmit.style.background='#333';
     }
+    else
+    {
 
+    
      if(name!=='' || email!=='')
      {
         
@@ -29,7 +47,7 @@ function storedata(e){
             name,
             email
         };
-        // axios.post("https://crudcrud.com/api/f926f97655744c3a8a92d538bddec55d/bookapinmnetdetail",obj).then((res)=>{
+        // axios.post("https://crudcrud.com/api/aad32d87ef1144bf8ad8dd3d919651f5/bookapinmnetdetail",obj).then((res)=>{
         //     console.log(res);
         //     //showOutput(res)
         //   }).catch((err)=>{
@@ -39,7 +57,7 @@ function storedata(e){
 
         axios({
           method:'post',
-          url:"https://crudcrud.com/api/f926f97655744c3a8a92d538bddec55d/bookapinmnetdetail",
+          url:"https://crudcrud.com/api/aad32d87ef1144bf8ad8dd3d919651f5/bookapinmnetdetail",
           data:obj
            }).then((res)=>{
               console.log(res);
@@ -49,17 +67,18 @@ function storedata(e){
               console.log(err);
             })
     
-
+        
             displaydata(obj);
              cleardata();
       }
+    }
 }
 
 ////////////////////for window refresh///////////////////////////
 
 window.addEventListener('DOMContentLoaded',(event)=>{
     console.log("i am window");
-    axios.get("https://crudcrud.com/api/f926f97655744c3a8a92d538bddec55d/bookapinmnetdetail")
+    axios.get("https://crudcrud.com/api/aad32d87ef1144bf8ad8dd3d919651f5/bookapinmnetdetail")
     .then((Response)=>{
       console.log(Response);
       for(var i=0;i<Response.data.length;i++)
@@ -92,7 +111,7 @@ function deletedata(deleteid)
 {
    // localStorage.removeItem(deleteid);
 
-    axios.delete(`https://crudcrud.com/api/f926f97655744c3a8a92d538bddec55d/bookapinmnetdetail/${deleteid}`)
+    axios.delete(`https://crudcrud.com/api/aad32d87ef1144bf8ad8dd3d919651f5/bookapinmnetdetail/${deleteid}`)
     .then(()=>{
       removedata(deleteid);
     }).catch((err)=>{
@@ -119,21 +138,26 @@ function removedata(deleteid)
 
 
 //////////////////////////////////updata_data////////////////////
-function editdata(id,name,emailid){
+function editdata(user_id,name,emailid){
   const name1=document.getElementById('name').value=name;
     const email=document.getElementById('email').value=emailid;
-  axios({
-      method:'put',
-      url:`https://crudcrud.com/api/f926f97655744c3a8a92d538bddec55d/bookapinmnetdetail/${id}`,
-        data:{
-          "name":name1,
-          "email":email
-        }
-  }).then((Response)=>{
-    console.log(respone);
-  }).catch((err)=>{
-    console.log(err);
-  });
+    id=user_id;
+  // axios({
+  //     method:'put',
+  //     url:`https://crudcrud.com/api/aad32d87ef1144bf8ad8dd3d919651f5/bookapinmnetdetail/${id}`,
+  //     const data={
+  //         "name":name1,
+  //         "email":email
+  //       }
+  //       console.log()
+  // axios.put(`https://crudcrud.com/api/aad32d87ef1144bf8ad8dd3d919651f5/bookapinmnetdetail/${id}`,data)
+  // .then((Response)=>{
+  //   console.log(Response);
+  // }).catch((err)=>{
+  //   console.log(err);
+  // });
+
+  removedata(user_id);
     
 
     sumbmit.value='UPDATE';
